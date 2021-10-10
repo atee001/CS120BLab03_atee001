@@ -18,26 +18,28 @@ int main(void) {
     DDRB = 0x00; PORTB = 0xFF;
     DDRC = 0xFF; PORTC = 0x00;
 
-    unsigned char countA = 0x00;
-    unsigned char countB = 0x00;
+    unsigned char count = 0x00;
     unsigned char temp = 0x00;
 
     while (1) {
-	
+
 	temp = PINA;
-	while(temp%2){
-		countA++;
+
+	while(temp){
+
+		if(temp%2) count++;
+		temp /= 2;		
+
+	}
+
+	temp = PINB;	
+	while(temp){
+		if(temp%2) count++;
 		temp /= 2;
 	}
 
-	temp = PINB;
-	while(temp%2){
-		countB++;
-		temp/=2;
-	}
-	
-	PORTC = countA + countB;
-	
+	PORTC = count;
+	count = 0;	
     }
     return 1;
 }
